@@ -47,9 +47,10 @@ typedef struct lista{
 
 lista *teste;
 int tam;
-void empilha(lista *l,int valor);
-void addlista(lista *l ,int valor,int pos);
+lista *empilha(lista **l,int valor);
+lista *addlista(lista **l ,int valor,int pos);
 void desenfileira( lista **l);
+void desempilha(lista **l);
 
 // RETORNA O TOTAL DE ELEMENTOS NA LISTA
 int tamanho(lista *l){
@@ -132,7 +133,7 @@ void lerArquivo(lista *l,char *end){
   
   while( (fscanf(arquivo,"%d:%d", &i, &valorLido))!=EOF ){
     printf("pos : %d  valor : %d \n",i,valorLido);
-      empilha(l,valorLido);
+      addlista(&l,valorLido,i);
       }
   
 }
@@ -184,43 +185,27 @@ int retira(lista **l, int pos)
 }
 
 //ADICIONA UM ELEMENTO NA LISTA
-void addlista(lista *l ,int valor,int pos){
-lista *ini_lista = l;
-int cont = tamanho(l);
 
-  if(pos>=0 && pos <=cont){
-    lista *l = (lista*)malloc(sizeof(lista*));
-    l->valor = valor;
-    l->proximo = NULL;
+lista *addlista(lista**l,int valor,int pos){
+      int i = 0;
+      lista *aux = (lista*)malloc(sizeof(lista*));
+      aux->valor = valor;
 
       if(pos == 0){
-            lista *aux = (lista*)malloc(sizeof(lista*));
-            aux->valor = valor;
-            aux->proximo = l;
-
-            l = aux;
-        }
-                 
-      else if(pos == cont){//fim
-        lista *aux = ini_lista;
-        for(int i =0 ; i < tam -1 ; i++){
-          aux = aux->proximo;
-        }
-      aux->proximo = l;
+        aux->proximo = *l;
+        *l = aux;
       }
-      else{
-          lista *aux = ini_lista;
-          for(int i =0 ; i < pos -1 ; i++){
-          aux = aux->proximo;
-        }
-        l->proximo = aux->proximo;
-        aux->proximo = l;
-      }
-    }
- 
-  else
-    printf("posicao invalida");
 
+      lista *cont = *l;
+      while (cont->proximo!= NULL &&  i != pos - 1)
+      {
+        cont = cont->proximo;
+        i++;
+      }
+      aux->proximo = cont->proximo;
+      cont->proximo = aux;
+      return aux;
+      
 }
 
 //ORDENA A LISTA
@@ -264,9 +249,9 @@ int cheia(){
 
 
 //ADICIONAR NO FINAL DA LISTA
-void empilha(lista *l,int valor){
-lista *ini_lista = l;
-int cont = tamanho(l);
+lista *empilha(lista **l,int valor){
+lista *ini_lista = *l;
+int cont = tamanho(*l);
 int pos = 0;
 
   if(pos>=0 && pos <=cont){
@@ -288,6 +273,7 @@ int pos = 0;
   }
 
 }
+
 
 //REMOVER NO FINAL DA LISTA
 void desempilha(lista **l){
@@ -396,7 +382,7 @@ void lerArquivoPilha(lista *l,char *end){
 
   
   while( (fscanf(arquivo,"%d",&valorLido))!=EOF ){
-      empilha(l,valorLido);
+      empilha(&l,valorLido);
       }
   
 }
@@ -424,6 +410,7 @@ int pos = 0;
         l->valor = valor;
         l->proximo = NULL;
 
+        
         lista *aux = ini_lista;
         for(int i =0 ; i < cont -1 ; i++){
         aux = aux->proximo;

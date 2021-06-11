@@ -45,7 +45,7 @@ void menuLista(lista *l){
         printf("<7> Cheia:\n");
         printf("<8> Escrever no arquivo:\n");
         printf("<9> Ler Arquivo\n");
-        printf("<10>Tamanho\n");
+        printf("<10> Tamanho\n");
         printf("<11> Voltar:\n");
         scanf("%d",&optionLista);
 
@@ -57,7 +57,7 @@ void menuLista(lista *l){
         scanf("%d",&aux);
         printf("Insira a posicao:\n");
         scanf("%d",&aux2);
-        addlista(l,aux,aux2);
+        addlista(&l,aux,aux2);
             break;
         case 2:
             printf("Insira a valor:\n");
@@ -91,12 +91,12 @@ void menuLista(lista *l){
             break;
         case 8:
             printf("Insira o endereco:\n");
-            scanf("%s",&end);
+            scanf("%s",end);
             escreverArquivo(l,end);
             break;
         case 9:
             printf("Insira o endereco:\n");
-            scanf("%s",&end);
+            scanf("%s",end);
             lerArquivo(l,end);
             break;   
         case 10:
@@ -136,7 +136,7 @@ void menuPilha(lista *l){
         case 1:
         printf("Insira o Valor:\n");
         scanf("%d",&aux);
-        empilha(l,aux);
+        empilha(&l,aux);
             break;
         case 2:
             printf("Elemento do topo foi removido:\n");
@@ -215,12 +215,12 @@ void menuFila(lista *l){
         
         case 6:
             printf("Insira o endereco:\n");
-            scanf("%s",&end);
+            scanf("%s",end);
             escreverArquivoFila(l,end);
             break;
         case 7:
             printf("Insira o endereco:\n");
-            scanf("%s",&end);
+            scanf("%s",end);
             lerArquivoFila(l,end);
             break;
         case 8:
