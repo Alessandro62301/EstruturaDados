@@ -8,7 +8,6 @@ struct noArv
   struct noArv *Dir;
 };
 
-//! http://www.facom.ufu.br/~madriana/EBD/dic_arqbin.cpp
 void apagar(noArv **arv){
   if (*arv != NULL)
   {
