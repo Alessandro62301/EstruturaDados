@@ -82,23 +82,23 @@ int cria(int elem){
 }
 int alturaArv(struct noArv * arv){
     int esquerda;
-    int direita;
+    int Direita;
     if(arv == NULL){
         return -1;
     }
     else{
          esquerda = alturaArv(arv->Esq);
-         direita = alturaArv(arv->Dir);
-        if(esquerda > direita){
+         Direita = alturaArv(arv->Dir);
+        if(esquerda > Direita){
             return esquerda + 1;
         }
         else{
-            return direita + 1;
+            return Direita + 1;
         }
     }
 }
 int maiorArvore(noArv *arv) {
-    int maior, maiorAtual, esquerda, direita;
+    int maior, maiorAtual, esquerda, Direita;
 
     maiorAtual = arv->info;
     maior = maiorAtual; 
@@ -110,16 +110,16 @@ int maiorArvore(noArv *arv) {
         }
     }
     if (arv->Dir != NULL){
-        direita = maiorArvore(arv->Dir);
+        Direita = maiorArvore(arv->Dir);
 
-        if (direita > maior){
-            maior = direita;
+        if (Direita > maior){
+            maior = Direita;
         }
     }
     return maior;
 }
 int menorArvore(noArv *arv) {
-    int menor, menorAtual, esquerda, direita;
+    int menor, menorAtual, esquerda, Direita;
 
     menorAtual = arv->info;
     menor = menorAtual; 
@@ -131,10 +131,10 @@ int menorArvore(noArv *arv) {
         }
     }
     if (arv->Dir != NULL){
-        direita = menorArvore(arv->Dir);
+        Direita = menorArvore(arv->Dir);
 
-        if (direita < menor){
-            menor = direita;
+        if (Direita < menor){
+            menor = Direita;
         }
     }
     return menor;
@@ -223,20 +223,82 @@ int valorLido;
         }
 }
 
-
-
-
+// int retornarFolhas(noArv *arv){
+//   if (arv == NULL){
+//     return 0;
+//   }
+//   else{
+//     if(arv->Esq == NULL && arv->Dir == NULL){
+//       printf("%d ",arv->info);
+//       retornarFolhas(arv->Esq);
+//       retornarFolhas(arv->Dir);
+//     }
+//     else{
+      
+//     }
+//   }
+  
+// }
+int retornarFolhas(noArv *arv){
+     if(arv == NULL){
+       return 0;
+     }
+     if (arv->Esq == NULL && arv->Dir == NULL){
+        return 0;
+       }
+       else{
+        printf("end == %d\n",&arv);
+        retornarFolhas(arv->Esq);
+        retornarFolhas(arv->Dir);
+     }
+ }
+noArv*retirar(noArv* arv, int elem)
+{
+ if (arv == NULL)
+    return NULL;
+ else if (arv->info > elem)
+    arv->Esq = retirar(arv->Esq, elem);
+ else if (arv->info < elem)
+    arv->Dir = retirar(arv->Dir, elem);
+ else {
+    if (arv->Esq == NULL && arv->Dir == NULL){
+       free(arv);
+       arv = NULL;
+    }
+    else if (arv->Esq == NULL){
+       noArv* aux1 = arv;
+      arv = arv->Dir;
+       free (aux1);
+    }
+    else if (arv->Dir == NULL){
+       noArv* aux1 = arv;
+       arv = arv->Esq;
+       free (aux1);
+    }
+    else {
+       noArv* aux2 = arv->Esq;
+       while (aux2->Dir != NULL){
+          aux2 = aux2->Dir;
+       }
+       arv->info = aux2->info;
+       aux2->info = elem;
+       arv->Esq = retirar(arv->Esq,elem);
+    }
+ }
+return arv;
+}
+ 
 int main(void)
 {
     int teste;
     struct noArv *Arvore;
     Arvore = NULL;
    
-    insereArv(&Arvore,50);
-    insereArv(&Arvore,50);
-    insereArv(&Arvore,510);
-
+    insereArv(&Arvore,10);
+    insereArv(&Arvore,100);
+    insereArv(&Arvore,1450);
+    insereArv(&Arvore,1);
+    retirar(Arvore,1450);
     imprimeArv(Arvore);
-    printf("(%d)",buscar(Arvore,520));
     return 0;
 }

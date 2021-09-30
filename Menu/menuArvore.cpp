@@ -7,14 +7,14 @@ void menuArvore(noArv*arv);
 // Definir estrutura ✔
 // Criar ✔
 // inserir elemento na árvore ✔
-// Remover elemento	
+// Remover elemento	✔
 // calcular a altura ✔
 // Imprimir infixa ✔
 // Imprimir prefixa ✔	
 // Imprimir posfixa ✔
 // Maior elemento ✔
 // Menor elemento	✔
-// Busca 
+// Busca ✔
 // Soma ✔
 // Número de folha ✔
 // Número de elementos ✔
@@ -22,8 +22,7 @@ void menuArvore(noArv*arv);
 // Média dos elementos ✔
 // Apagar ✔
 // Gravar árvore (arquivo texto) ✔
-// Carregar árvore  (arquivo texto)
-// Retorna os nós folhas
+// Retorna os nós folhas✔
 
 
 void menuArvore(noArv*arv){
@@ -61,9 +60,9 @@ void menuArvore(noArv*arv){
         insereArv(&arv,aux);
             break;
         case 2:
-            // printf("Insira a valor:\n");
-            // scanf("%d",&aux);
-            // retira(&l,aux);
+            printf("Insira o valor para Remover:");
+            scanf("%d",&aux);
+            retirar(arv,aux);
             break;
         case 3:
             imprimeArv(arv);
@@ -121,7 +120,7 @@ void menuArvore(noArv*arv){
             // ler(arv,end);
             break;
         case 18:
-           
+            retornarFolhas(arv);
             break;
         case 19:
             menuArvore(arv);

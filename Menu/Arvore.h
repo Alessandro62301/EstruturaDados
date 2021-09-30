@@ -11,23 +11,22 @@ struct noArv{
 // Definir estrutura ✔
 // Criar ✔
 // inserir elemento na árvore ✔
-// Remover elemento	
+// Remover elemento	 ✔
 // calcular a altura ✔
 // Imprimir infixa ✔
 // Imprimir prefixa ✔	
 // Imprimir posfixa ✔
 // Maior elemento ✔
 // Menor elemento	✔
-// Busca 
+// Busca ✔
 // Soma ✔
 // Número de folha ✔
 // Número de elementos ✔
-// Número de nós com 1 filho
+// Número de nós com 1 filho ✔
 // Média dos elementos ✔
 // Apagar ✔
 // Gravar árvore (arquivo texto) ✔
-// Carregar árvore  (arquivo texto)
-// Retorna os nós folhas
+// Retorna os nós folhas✔
 
 //!CRIAR ARVORE
 int cria(int elem){
@@ -254,4 +253,53 @@ void escreverArquivo(noArv *arv,char *end){
     }    
   }
 }
-//!LER DO ARQUIVO PARA ARVORE
+//!RETORNAR FOLHAS
+int retornarFolhas(noArv *arv){
+     if(arv == NULL){
+       return 0;
+     }
+     if (arv->Esq == NULL && arv->Dir == NULL){
+        return 0;
+       }
+       else{
+        printf("end == %d\n",&arv);
+        retornarFolhas(arv->Esq);
+        retornarFolhas(arv->Dir);
+     }
+ }
+//!REMOVER ELEMENTO DA ARVORE
+noArv*retirar(noArv* arv, int elem)
+{
+ if (arv == NULL)
+    return NULL;
+ else if (arv->info > elem)
+    arv->Esq = retirar(arv->Esq, elem);
+ else if (arv->info < elem)
+    arv->Dir = retirar(arv->Dir, elem);
+ else {
+    if (arv->Esq == NULL && arv->Dir == NULL){
+       free(arv);
+       arv = NULL;
+    }
+    else if (arv->Esq == NULL){
+       noArv* aux1 = arv;
+      arv = arv->Dir;
+       free (aux1);
+    }
+    else if (arv->Dir == NULL){
+       noArv* aux1 = arv;
+       arv = arv->Esq;
+       free (aux1);
+    }
+    else {
+       noArv* aux2 = arv->Esq;
+       while (aux2->Dir != NULL){
+          aux2 = aux2->Dir;
+       }
+       arv->info = aux2->info;
+       aux2->info = elem;
+       arv->Esq = retirar(arv->Esq,elem);
+    }
+ }
+return arv;
+}
